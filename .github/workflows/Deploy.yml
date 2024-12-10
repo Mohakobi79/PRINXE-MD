@@ -8,18 +8,27 @@ on:
     branches:
       - main
   schedule:
-    - cron: '0 */6 * * *'  
+    - cron: '0 */6 * * *'  # BY 𝙎-𝙏𝞢𝞜 
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
 
+    permissions:
+      actions: write  # Needed to cancel other workflows
+      contents: read  # Needed to clone the repository
+
     strategy:
       matrix:
         node-version: [20.x]
 
     steps:
+    - name: Cancel Previous Runs
+      uses: styfle/cancel-workflow-action@0.11.0
+      with:
+        access_token: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Checkout repository
       uses: actions/checkout@v3
 
@@ -36,7 +45,7 @@ jobs:
 
     - name: Start application with timeout
       run: |
-        timeout 21590s npm start  # Limits run to 5h 59m 50s
+        timeout 21590s npm start  # Limite l'exécution à 5h 59m 50s
 
     - name: Save state (Optional)
       run: |
