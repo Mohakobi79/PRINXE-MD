@@ -46,7 +46,7 @@ jobs:
 
       # Build the project
       - name: Build step
-        run: "npm run start"
+        run: "npm start"
 
       # Upload to Deno Deploy
       - name: Upload to Deno Deploy
